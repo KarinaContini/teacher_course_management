@@ -1,0 +1,225 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="TeacherCourseDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Courses">
+          <Key>
+            <PropertyRef Name="CourseNumber" />
+          </Key>
+          <Property Name="CourseNumber" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CourseTitle" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Duration" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Registration">
+          <Key>
+            <PropertyRef Name="RegistrationID" />
+          </Key>
+          <Property Name="RegistrationID" Type="int" Nullable="false" />
+          <Property Name="CourseNumber" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="TeacherID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Teachers">
+          <Key>
+            <PropertyRef Name="TeacherId" />
+          </Key>
+          <Property Name="TeacherId" Type="int" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="JobTitle" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Registration_Courses">
+          <End Role="Courses" Type="Self.Courses" Multiplicity="1" />
+          <End Role="Registration" Type="Self.Registration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Courses">
+              <PropertyRef Name="CourseNumber" />
+            </Principal>
+            <Dependent Role="Registration">
+              <PropertyRef Name="CourseNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Registration_Teachers">
+          <End Role="Teachers" Type="Self.Teachers" Multiplicity="1" />
+          <End Role="Registration" Type="Self.Registration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teachers">
+              <PropertyRef Name="TeacherId" />
+            </Principal>
+            <Dependent Role="Registration">
+              <PropertyRef Name="TeacherID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TeacherCourseDBModelStoreContainer">
+          <EntitySet Name="Courses" EntityType="Self.Courses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Registration" EntityType="Self.Registration" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Teachers" EntityType="Self.Teachers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Registration_Courses" Association="Self.FK_Registration_Courses">
+            <End Role="Courses" EntitySet="Courses" />
+            <End Role="Registration" EntitySet="Registration" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Registration_Teachers" Association="Self.FK_Registration_Teachers">
+            <End Role="Teachers" EntitySet="Teachers" />
+            <End Role="Registration" EntitySet="Registration" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TeacherCourseDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Courses">
+          <Key>
+            <PropertyRef Name="CourseNumber" />
+          </Key>
+          <Property Name="CourseNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CourseTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Duration" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Registration" Relationship="Self.FK_Registration_Courses" FromRole="Courses" ToRole="Registration" />
+        </EntityType>
+        <EntityType Name="Registration">
+          <Key>
+            <PropertyRef Name="RegistrationID" />
+          </Key>
+          <Property Name="RegistrationID" Type="Int32" Nullable="false" />
+          <Property Name="CourseNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TeacherID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Courses" Relationship="Self.FK_Registration_Courses" FromRole="Registration" ToRole="Courses" />
+          <NavigationProperty Name="Teachers" Relationship="Self.FK_Registration_Teachers" FromRole="Registration" ToRole="Teachers" />
+        </EntityType>
+        <EntityType Name="Teachers">
+          <Key>
+            <PropertyRef Name="TeacherId" />
+          </Key>
+          <Property Name="TeacherId" Type="Int32" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Registration" Relationship="Self.FK_Registration_Teachers" FromRole="Teachers" ToRole="Registration" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="JobTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Registration_Courses">
+          <End Role="Courses" Type="Self.Courses" Multiplicity="1" />
+          <End Role="Registration" Type="Self.Registration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Courses">
+              <PropertyRef Name="CourseNumber" />
+            </Principal>
+            <Dependent Role="Registration">
+              <PropertyRef Name="CourseNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Registration_Teachers">
+          <End Role="Teachers" Type="Self.Teachers" Multiplicity="1" />
+          <End Role="Registration" Type="Self.Registration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teachers">
+              <PropertyRef Name="TeacherId" />
+            </Principal>
+            <Dependent Role="Registration">
+              <PropertyRef Name="TeacherID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TeacherCourseDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Courses" EntityType="Self.Courses" />
+          <EntitySet Name="Registration" EntityType="Self.Registration" />
+          <EntitySet Name="Teachers" EntityType="Self.Teachers" />
+          <EntitySet Name="Users" EntityType="Self.Users" />
+          <AssociationSet Name="FK_Registration_Courses" Association="Self.FK_Registration_Courses">
+            <End Role="Courses" EntitySet="Courses" />
+            <End Role="Registration" EntitySet="Registration" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Registration_Teachers" Association="Self.FK_Registration_Teachers">
+            <End Role="Teachers" EntitySet="Teachers" />
+            <End Role="Registration" EntitySet="Registration" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TeacherCourseDBModelStoreContainer" CdmEntityContainer="TeacherCourseDBEntities">
+          <EntitySetMapping Name="Courses">
+            <EntityTypeMapping TypeName="TeacherCourseDBModel.Courses">
+              <MappingFragment StoreEntitySet="Courses">
+                <ScalarProperty Name="CourseNumber" ColumnName="CourseNumber" />
+                <ScalarProperty Name="CourseTitle" ColumnName="CourseTitle" />
+                <ScalarProperty Name="Duration" ColumnName="Duration" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Registration">
+            <EntityTypeMapping TypeName="TeacherCourseDBModel.Registration">
+              <MappingFragment StoreEntitySet="Registration">
+                <ScalarProperty Name="RegistrationID" ColumnName="RegistrationID" />
+                <ScalarProperty Name="CourseNumber" ColumnName="CourseNumber" />
+                <ScalarProperty Name="TeacherID" ColumnName="TeacherID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Teachers">
+            <EntityTypeMapping TypeName="TeacherCourseDBModel.Teachers">
+              <MappingFragment StoreEntitySet="Teachers">
+                <ScalarProperty Name="TeacherId" ColumnName="TeacherId" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="TeacherCourseDBModel.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="JobTitle" ColumnName="JobTitle" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

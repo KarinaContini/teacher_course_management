@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="TeacherCourseDBModelStoreContainer" CdmEntityContainer="TeacherCourseDBEntities">
+    <EntitySetMapping Name="Courses">
+      <EntityTypeMapping TypeName="TeacherCourseDBModel.Courses">
+        <MappingFragment StoreEntitySet="Courses">
+          <ScalarProperty Name="CourseNumber" ColumnName="CourseNumber" />
+          <ScalarProperty Name="CourseTitle" ColumnName="CourseTitle" />
+          <ScalarProperty Name="Duration" ColumnName="Duration" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Registration">
+      <EntityTypeMapping TypeName="TeacherCourseDBModel.Registration">
+        <MappingFragment StoreEntitySet="Registration">
+          <ScalarProperty Name="RegistrationID" ColumnName="RegistrationID" />
+          <ScalarProperty Name="CourseNumber" ColumnName="CourseNumber" />
+          <ScalarProperty Name="TeacherID" ColumnName="TeacherID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Teachers">
+      <EntityTypeMapping TypeName="TeacherCourseDBModel.Teachers">
+        <MappingFragment StoreEntitySet="Teachers">
+          <ScalarProperty Name="TeacherId" ColumnName="TeacherId" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="TeacherCourseDBModel.Users">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="JobTitle" ColumnName="JobTitle" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
